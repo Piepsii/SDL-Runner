@@ -11,10 +11,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-// font: 
-// - Fira Mono
-// - Liberation Mono
-
 namespace papaya {
    namespace {
       constexpr Texture::Format texture_format(const int components)

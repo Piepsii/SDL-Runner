@@ -13,7 +13,7 @@ int game_run()
       Window window("papaya", 1024, 576);
       Dispatcher dispatcher;
       Input input;
-      FileSystem filesystem("lippuu", "papaya");
+      FileSystem filesystem("GitRepos", "papaya");
       TextureStorage textures(filesystem);
 
       if (!Graphics::init()) {
@@ -31,9 +31,9 @@ int game_run()
       const Vertex vertices[] =
       {
          { Vector2( 10.0f,  10.0f), Vector2(0.0f, 0.0f), Color(1.0f, 1.0f, 1.0f, 1.0f) },
-         { Vector2(200.0f,  10.0f), Vector2(1.0f, 0.0f), Color(1.0f, 1.0f, 1.0f, 1.0f) },
-         { Vector2(200.0f, 200.0f), Vector2(1.0f, 1.0f), Color(1.0f, 1.0f, 1.0f, 1.0f) },
-         { Vector2( 10.0f, 200.0f), Vector2(0.0f, 1.0f), Color(1.0f, 1.0f, 1.0f, 1.0f) },
+         { Vector2(300.0f,  10.0f), Vector2(1.0f, 0.0f), Color(1.0f, 1.0f, 1.0f, 1.0f) },
+         { Vector2(300.0f, 300.0f), Vector2(1.0f, 1.0f), Color(1.0f, 1.0f, 1.0f, 1.0f) },
+         { Vector2( 10.0f, 300.0f), Vector2(0.0f, 1.0f), Color(1.0f, 1.0f, 1.0f, 1.0f) },
       };
 
       const char *test_image_filename = "assets/test.png";
