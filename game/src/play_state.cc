@@ -3,9 +3,9 @@
 
 #include <platform/time.hpp>
 #include <platform/debug.hpp>
+#include <game/runtime.hpp>
 #include <input/input.hpp>
 #include <scene/renderer.hpp>
-#include <game/runtime.hpp>
 
 namespace runner
 {
@@ -18,15 +18,6 @@ namespace runner
 
 	}
 
-	bool PlayState::init()
-	{
-		return false;
-	}
-
-	void PlayState::shut()
-	{
-	}
-
 	papaya::State *PlayState::next() const
 	{
 		return nullptr;
@@ -35,6 +26,13 @@ namespace runner
 	bool PlayState::update(const papaya::Time &deltaTime)
 	{
 		using namespace papaya;
+
+		static bool once = false;
+		if( !once )
+		{
+			once = true;
+			Debug::log("PlayState");
+		}
 
 		if( keyboard_.pressed(Key::Escape) )
 		{

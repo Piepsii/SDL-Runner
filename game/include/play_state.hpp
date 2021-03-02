@@ -17,9 +17,6 @@ namespace runner
 	public:
 		PlayState(papaya::Runtime &runtime, MenuState *menu);
 
-		bool init();
-		void shut();
-
 		virtual papaya::State *next() const;
 		virtual bool update(const papaya::Time &deltaTime);
 		virtual void render(papaya::Renderer &renderer);
