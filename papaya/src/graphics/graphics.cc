@@ -27,6 +27,9 @@ namespace papaya {
          return false;
       }
 
+      GLint max_texture_size = 0;
+      glGetIntegerv(GL_MAX_TEXTURE_SIZE, &max_texture_size);
+
       return true;
    }
 

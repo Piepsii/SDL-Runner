@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -96,6 +96,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\game\game.cc" />
+    <ClCompile Include="src\game\runtime.cc" />
     <ClCompile Include="src\graphics\graphics.cc" />
     <ClCompile Include="src\graphics\texture.cc" />
     <ClCompile Include="src\graphics\texture_storage.cc" />
@@ -117,9 +119,15 @@
     <ClCompile Include="src\platform\filestream.cc" />
     <ClCompile Include="src\platform\filesystem.cc" />
     <ClCompile Include="src\platform\platform.cc" />
+    <ClCompile Include="src\platform\time.cc" />
     <ClCompile Include="src\platform\window.cc" />
+    <ClCompile Include="src\scene\renderer.cc" />
+    <ClCompile Include="src\scene\sprite.cc" />
+    <ClCompile Include="src\scene\transform.cc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\game\game.hpp" />
+    <ClInclude Include="include\game\runtime.hpp" />
     <ClInclude Include="include\graphics\graphics.hpp" />
     <ClInclude Include="include\graphics\texture.hpp" />
     <ClInclude Include="include\graphics\vertex.hpp" />
@@ -144,7 +152,11 @@
     <ClInclude Include="include\platform\filestream.hpp" />
     <ClInclude Include="include\platform\filesystem.hpp" />
     <ClInclude Include="include\platform\platform.hpp" />
+    <ClInclude Include="include\platform\time.hpp" />
     <ClInclude Include="include\platform\window.hpp" />
+    <ClInclude Include="include\scene\renderer.hpp" />
+    <ClInclude Include="include\scene\sprite.hpp" />
+    <ClInclude Include="include\scene\transform.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="include\graphics\texture_storage.hpp" />

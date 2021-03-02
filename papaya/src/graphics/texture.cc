@@ -31,6 +31,17 @@ namespace papaya {
          return GL_NONE;
       }
 
+      constexpr GLenum gl_texture_format_internal(const Texture::Format format)
+      {
+         switch (format)
+         {
+            case Texture::Format::Rgb8:  return GL_RGB8;
+            case Texture::Format::Rgba8: return GL_RGBA8;
+         }
+
+         return GL_NONE;
+      }
+
       constexpr GLenum gl_texture_format(const Texture::Format format)
       {
          switch (format)
@@ -88,9 +99,10 @@ namespace papaya {
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_texture_filter(filter));
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, gl_texture_address(address));
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, gl_texture_address(address));
+      glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
       glTexImage2D(GL_TEXTURE_2D,
                    0,
-                   gl_texture_format(format),
+                   gl_texture_format_internal(format),
                    width,
                    height,
                    0,

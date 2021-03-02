@@ -11,10 +11,13 @@ int game_run()
    try { 
       Platform platform;
       Window window("papaya", 1024, 576);
+      Debug::log("Platform and window ok!");
+
       Dispatcher dispatcher;
       Input input;
-      FileSystem filesystem("GitRepos", "papaya");
+      FileSystem filesystem("lippuu", "papaya");
       TextureStorage textures(filesystem);
+      Renderer renderer;
 
       if (!Graphics::init()) {
          throw std::runtime_error("Could not initialize Graphics!");
@@ -26,19 +29,19 @@ int game_run()
       dispatcher.register_listener<MouseButtonEvent>(input);
       dispatcher.register_listener<MouseWheelEvent>(input);
 
-      Debug::log("Platform and window ok!");
+      Runtime runtime(dispatcher,
+                      input,
+                      filesystem,
+                      textures,
+                      renderer);
 
-      const Vertex vertices[] =
+      // todo: replace with actual game class!
+      Game game(runtime);
+      if( !game.init() )
       {
-         { Vector2( 10.0f,  10.0f), Vector2(0.0f, 0.0f), Color(1.0f, 1.0f, 1.0f, 1.0f) },
-         { Vector2(300.0f,  10.0f), Vector2(1.0f, 0.0f), Color(1.0f, 1.0f, 1.0f, 1.0f) },
-         { Vector2(300.0f, 300.0f), Vector2(1.0f, 1.0f), Color(1.0f, 1.0f, 1.0f, 1.0f) },
-         { Vector2( 10.0f, 300.0f), Vector2(0.0f, 1.0f), Color(1.0f, 1.0f, 1.0f, 1.0f) },
-      };
-
-      const char *test_image_filename = "assets/test.png";
-      textures.load(test_image_filename);
-      const Texture *image = textures.find(test_image_filename);
+         Debug::log("Failed to initialize game!");
+         return 0;
+      }
 
       bool running = true;
       while (running) {
@@ -47,23 +50,16 @@ int game_run()
             running = false;
          }
 
-         if (input.keyboard().any_released()) {
+         auto dt = runtime.deltaTime();
+         if( !game.tick(dt) )
+         {
             running = false;
          }
-
-         float mouse_x = static_cast<float>(input.mouse().x());
-         float mouse_y = static_cast<float>(input.mouse().y());
-         Vector2 mp = Vector2(mouse_x, mouse_y) / Vector2(1024.0f, 576.0f);
-
-         Graphics::clear({ 1.0f, mp.x_, mp.y_, 1.0f });
-         Graphics::set_viewport({ 0, 0, 1024, 576 });
-         Graphics::set_projection( Matrix4::orthographic(1024.0f, 576.0f) );
-
-         Graphics::render(image, 4, vertices);
 
          window.present();
       }
 
+      game.shut();
       Graphics::shut();
    } 
    catch (std::exception &e) {

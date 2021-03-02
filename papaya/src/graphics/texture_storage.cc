@@ -11,6 +11,10 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
+// font: 
+// - Fira Mono
+// - Liberation Mono
+
 namespace papaya {
    namespace {
       constexpr Texture::Format texture_format(const int components)
@@ -77,8 +81,10 @@ namespace papaya {
          assert(false && "Error could not parse image data!");
       }
 
+      auto f = texture_format(components);
+
       Texture texture;
-      bool success = texture.create(texture_format(components), width, height, data);
+      bool success = texture.create(f, width, height, data);
       stbi_image_free(data);
 
       if (!success) {
