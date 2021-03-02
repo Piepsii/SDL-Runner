@@ -4,6 +4,7 @@ namespace papaya
 {
 	class Time;
 	class Runtime;
+	class State;
 
 	class Game
 	{
@@ -16,7 +17,11 @@ namespace papaya
 		virtual bool tick(const Time &deltaTime);
 
 	protected:
+		void set_active_state(State *state);
+
+	protected:
 		Runtime &runtime_;
+		State *current_;
 
 	};
-}
+} // !papaya

@@ -1,6 +1,7 @@
 // game_run.cc
 
 #include <papaya.hpp>
+#include "endless_runner.hpp"
 
 #include <stdexcept>
 
@@ -35,11 +36,10 @@ int game_run()
                       textures,
                       renderer);
 
-      // todo: replace with actual game class!
-      Game game(runtime);
-      if( !game.init() )
+      runner::EndlessRunner *game = new runner::EndlessRunner(runtime);
+      if( !game->init() )
       {
-         Debug::log("Failed to initialize game!");
+         Debug::log("failed to initialize game!");
          return 0;
       }
 
@@ -51,7 +51,7 @@ int game_run()
          }
 
          auto dt = runtime.deltaTime();
-         if( !game.tick(dt) )
+         if( !game->tick(dt) )
          {
             running = false;
          }
@@ -59,7 +59,9 @@ int game_run()
          window.present();
       }
 
-      game.shut();
+      game->shut();
+      delete game;
+
       Graphics::shut();
    } 
    catch (std::exception &e) {

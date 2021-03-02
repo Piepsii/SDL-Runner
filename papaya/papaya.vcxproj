@@ -159,6 +159,7 @@
     <ClInclude Include="include\scene\transform.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="include\game\state.hpp" />
     <None Include="include\graphics\texture_storage.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
