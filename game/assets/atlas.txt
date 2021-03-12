@@ -1,0 +1,9 @@
+{
+	"properties" : {
+		"provides-namespace" : true
+	},
+	"info" : {
+		"author" : "com.developerName",
+		"version" : 1
+	}
+}
