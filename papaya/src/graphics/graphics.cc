@@ -21,14 +21,15 @@ namespace papaya {
       glEnable(GL_TEXTURE_2D);
       glEnable(GL_BLEND);
       glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+      
+      glEnableClientState(GL_VERTEX_ARRAY);
+      glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+      glEnableClientState(GL_COLOR_ARRAY);
 
       unsigned int data[] = { 0xffffffff }; // 0xaarrggbb
       if (!white.create(Texture::Format::Rgba8, 1, 1, data)) {
          return false;
       }
-
-      GLint max_texture_size = 0;
-      glGetIntegerv(GL_MAX_TEXTURE_SIZE, &max_texture_size);
 
       return true;
    }
@@ -54,7 +55,6 @@ namespace papaya {
       glMatrixMode(GL_PROJECTION);
       glLoadIdentity();
       glMultMatrixf(&projection.x_.x_);
-
       glMatrixMode(GL_MODELVIEW);
       glLoadIdentity();
    }
@@ -62,9 +62,15 @@ namespace papaya {
    void Graphics::render(const Texture *texture, const int count, const Vertex *vertices)
    {
       assert( ((count % 4) == 0) );
-
       glBindTexture(GL_TEXTURE_2D, texture ? texture->handle() : white.handle());
 
+#if 1
+      const char *base = reinterpret_cast<const char *>(vertices);
+      glVertexPointer(2,   GL_FLOAT, sizeof(Vertex), reinterpret_cast<const GLvoid *>(base + offsetof(Vertex, position_)));
+      glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), reinterpret_cast<const GLvoid *>(base + offsetof(Vertex, texcoord_)));
+      glColorPointer(4,    GL_FLOAT, sizeof(Vertex), reinterpret_cast<const GLvoid *>(base + offsetof(Vertex, color_)));
+      glDrawArrays(GL_QUADS, 0, count);
+#else
       glBegin(GL_QUADS); 
       {
          for (int index = 0; index < count; index++) {
@@ -81,5 +87,6 @@ namespace papaya {
          }
       }
       glEnd();
+#endif
    }
 } // !papaya

@@ -21,6 +21,8 @@ namespace runner
 	{
 		set_active_state(&menu_);
 
+		GameObject go{};
+
 		FileStream stream = runtime_.filesystem().open("assets/test.zip");
 		if( !stream.is_valid() )
 		{

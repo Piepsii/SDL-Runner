@@ -5,18 +5,18 @@
 
 #include <stdexcept>
 
+using namespace papaya;
+
 int game_run()
 {
-   using namespace papaya;
-
    try { 
       Platform platform;
-      Window window("papaya", 1024, 576);
+      Window window("5sd13_2020 - Endless Runner - Paul Brandstetter", 1280, 720);
       Debug::log("Platform and window ok!");
 
       Dispatcher dispatcher;
       Input input;
-      FileSystem filesystem("lippuu", "papaya");
+      FileSystem filesystem("Piepsii", "papaya");
       TextureStorage textures(filesystem);
       Renderer renderer;
 
@@ -24,7 +24,7 @@ int game_run()
          throw std::runtime_error("Could not initialize Graphics!");
       }
 
-      dispatcher.register_listener<KeyPressedEvent>(input);
+      dispatcher.register_listener<KeyPressedEvent, Input>(input);
       dispatcher.register_listener<KeyReleasedEvent>(input);
       dispatcher.register_listener<MouseMoveEvent>(input);
       dispatcher.register_listener<MouseButtonEvent>(input);
@@ -43,6 +43,11 @@ int game_run()
          return 0;
       }
 
+      Vector2 size(10.0f, 10.0f);
+      Vector4 texcoord;
+      Sprite sprite;
+      Color color = Color::White;
+
       bool running = true;
       while (running) {
          input.update();
@@ -55,6 +60,7 @@ int game_run()
          {
             running = false;
          }
+         renderer.clear(color);
 
          window.present();
       }

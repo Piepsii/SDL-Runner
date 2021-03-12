@@ -26,5 +26,6 @@ namespace runner
 		const papaya::Keyboard &keyboard_;
 		papaya::State *next_;
 		PlayState *play_;
+
 	};
 } // !runner

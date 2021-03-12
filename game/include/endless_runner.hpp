@@ -19,5 +19,7 @@ namespace runner
 	private:
 		MenuState menu_;
 		PlayState play_;
+
+
 	};
 } // !runner

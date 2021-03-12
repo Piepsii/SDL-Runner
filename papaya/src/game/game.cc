@@ -1,41 +1,38 @@
+// game.cc
+
 #include "game/game.hpp"
 #include "game/runtime.hpp"
 #include "game/state.hpp"
 #include "platform/time.hpp"
-
 #include "input/input.hpp"
 
-namespace papaya
-{
+namespace papaya {
    Game::Game(Runtime &runtime)
       : runtime_(runtime)
       , current_(nullptr)
    {
-
    }
-
+   
    bool Game::init()
    {
-       return true;
+      return true;
    }
 
    void Game::shut()
    {
    }
 
-   bool Game::tick(const Time &deltaTime)
+   bool Game::tick(const Time &deltatime)
    {
-      if( runtime_.input().keyboard().released(Key::Escape) )
+      if (current_ == nullptr) {
          return false;
+      }
 
-      if( current_ == nullptr )
-         return false;
-
-      if( !current_->update(deltaTime) )
-      {
+      if (!current_->update(deltatime)) {
          State *next = current_->next();
-         if( next == nullptr )
+         if (next == nullptr) {
             return false;
+         }
 
          current_ = next;
       }
