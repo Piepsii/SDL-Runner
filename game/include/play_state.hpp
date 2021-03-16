@@ -17,6 +17,7 @@ namespace runner
 	{
 	public:
 		PlayState(papaya::Runtime &runtime, MenuState *menu);
+		~PlayState();
 
 		virtual papaya::State *next() const;
 		virtual bool update(const papaya::Time &deltaTime);
@@ -29,9 +30,5 @@ namespace runner
 		papaya::State *next_;
 		MenuState *menu_;
 
-		papaya::GameObject background_;
-		papaya::GameObject character_;
-		papaya::GameObject obstacle_pool_;
-		papaya::GameObject high_score;
 	};
 } // !runner

@@ -4,7 +4,7 @@
 
 namespace papaya {
    ComponentBase::ComponentBase(GameObject *parent, const ComponentFamilyId id)
-      : parent_(parent)
+      : game_object_(parent)
       , id_(id)
    {
    }
@@ -19,6 +19,10 @@ namespace papaya {
    }
 
    void ComponentBase::render(Renderer &renderer)
+   {
+   }
+
+   void ComponentBase::handle_input(Input &input)
    {
    }
 } // !papaya

@@ -14,14 +14,13 @@ namespace papaya
 	class SpriteComponent : public ComponentBase
 	{
 	public:
-		SpriteComponent(GameObject *parent, const ComponentFamilyId id);
+		SpriteComponent(GameObject *game_object, const ComponentFamilyId id);
 		~SpriteComponent();
 
 		void update(const Time &delta_time);
 		void render(Renderer &renderer);
 
 		Sprite sprite_;
-
 
 	};
 } // !papaya

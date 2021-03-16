@@ -17,6 +17,7 @@ namespace runner
 	{
 	public:
 		MenuState(papaya::Runtime &runtime, PlayState *play);
+		~MenuState();
 
 		virtual papaya::State *next() const;
 		virtual bool update(const papaya::Time &deltaTime);
@@ -28,9 +29,7 @@ namespace runner
 		const papaya::Keyboard &keyboard_;
 		papaya::State *next_;
 		PlayState *play_;
-
 		int blink_frequency;
-		papaya::GameObject welcome_;
 
 	};
 } // !runner

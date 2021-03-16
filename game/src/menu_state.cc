@@ -25,6 +25,11 @@ namespace runner
 	{
 	}
 
+	MenuState::~MenuState()
+	{
+		delete_game_objects();
+	}
+
 	State *MenuState::next() const
 	{
 		return next_;
@@ -41,6 +46,10 @@ namespace runner
 		}
 
 		// Input
+		if( game_objects != nullptr )
+		{
+			handle_input_game_objects(runtime_.input());
+		}
 		if( keyboard_.released(Key::Escape) )
 		{
 			next_ = nullptr;
@@ -52,8 +61,12 @@ namespace runner
 			return false;
 		}
 
+
 		// Update
-		welcome_.update(delta_time);
+		if( game_objects != nullptr )
+		{
+			update_game_objects(delta_time);
+		}
 
 		blink_frequency++;
 		if( blink_frequency == 60 )
@@ -68,21 +81,23 @@ namespace runner
 	{
 		if( blink_frequency > 30 )
 		{
-			welcome_.render(renderer);
+			render_game_objects(renderer);
 		}
 		renderer.clear(papaya::Color::Black);
 		renderer.flush();
 	}
 	bool MenuState::init()
 	{
+		papaya::GameObject *welcome_ = new GameObject;
 		const Texture *welcome_texture = runtime_.textures().find("assets/welcome_message.png");
-		welcome_.add_component<SpriteComponent>();
-		welcome_.get_component<SpriteComponent>()->sprite_.set_size(Vector2{ welcome_texture->width(), welcome_texture->height() });
-		welcome_.get_component<SpriteComponent>()->sprite_.set_texcoord(Vector4{ 0.0f, 0.0f, 1.0f, 1.0f });
-		welcome_.get_component<SpriteComponent>()->sprite_.set_texture(welcome_texture);
+		welcome_->add_component<SpriteComponent>();
+		welcome_->get_component<SpriteComponent>()->sprite_.set_size(Vector2{ welcome_texture->width(), welcome_texture->height() });
+		welcome_->get_component<SpriteComponent>()->sprite_.set_texcoord(Vector4{ 0.0f, 0.0f, 1.0f, 1.0f });
+		welcome_->get_component<SpriteComponent>()->sprite_.set_texture(welcome_texture);
 
 		Vector2 center = { Window::width_ / 2 - welcome_texture->width() / 2, Window::height_ / 2 - welcome_texture->height() / 2 };
-		welcome_.get_component<TransformComponent>()->transform_.set_position(center);
+		welcome_->get_component<TransformComponent>()->transform_.set_position(center);
+		push(*welcome_);
 		return true;
 	}
 } // !runner

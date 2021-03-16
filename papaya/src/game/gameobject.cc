@@ -13,6 +13,11 @@ namespace papaya {
       add_component<TransformComponent>();
    }
 
+   GameObject::GameObject(GameObject &game_object)
+   {
+      components_ = game_object.components_;
+   }
+
    GameObject::~GameObject()
    {
       for (auto &component : components_) {
@@ -32,5 +37,14 @@ namespace papaya {
       for (auto &component : components_) {
          component->render(renderer);
       }
+   }
+
+   void GameObject::handle_input(Input &input)
+   {
+      for( auto &component : components_ )
+      {
+         component->handle_input(input);
+      }
+
    }
 } // !papaya

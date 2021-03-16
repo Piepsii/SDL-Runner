@@ -4,8 +4,8 @@
 
 namespace papaya
 {
-	SpriteComponent::SpriteComponent(GameObject *parent, const ComponentFamilyId id)
-		: ComponentBase(parent, id)
+	SpriteComponent::SpriteComponent(GameObject *game_object, const ComponentFamilyId id)
+		: ComponentBase(game_object, id)
 	{
 
 	}
@@ -22,7 +22,7 @@ namespace papaya
 
 	void SpriteComponent::render(Renderer &renderer)
 	{
-		Transform transform = parent_->get_component<TransformComponent>()->transform_;
+		Transform transform = game_object_->get_component<TransformComponent>()->transform_;
 		renderer.draw(sprite_, transform);
 	}
 

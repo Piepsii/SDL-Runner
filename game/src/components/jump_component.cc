@@ -4,16 +4,18 @@
 
 namespace papaya
 {
-	JumpComponent::JumpComponent(GameObject *parent, const ComponentFamilyId id)
-		: ComponentBase(parent, id)
-		, transform_(&parent_->get_component<TransformComponent>()->transform_)
+	JumpComponent::JumpComponent(GameObject *game_object, const ComponentFamilyId id)
+		: ComponentBase(game_object, id)
+		, transform_(&game_object_->get_component<TransformComponent>()->transform_)
 		, is_jumping_(false)
 		, is_falling_(false)
 		, on_ground_(true)
+		, velocity_(0.0f)
+		, gravity_(0.5f)
+		, gravity_scaling_(25.0f)
+		, thrust_(6.0f)
 	{
 		ground_height_ = transform_->position_.y_;
-		velocity_ = 0.0f;
-		gravity_ = 0.5f;
 	}
 
 	JumpComponent::~JumpComponent()
@@ -23,7 +25,7 @@ namespace papaya
 
 	void JumpComponent::update(const Time &delta_time)
 	{
- 		velocity_ = velocity_ - gravity_ * delta_time.as_seconds() * 25;
+ 		velocity_ = velocity_ - gravity_ * delta_time.as_seconds() * gravity_scaling_;
 		transform_->position_.y_ -= velocity_;
 
 		if( velocity_ > 0.0f )
@@ -45,12 +47,21 @@ namespace papaya
 		}
 	}
 
+	void JumpComponent::handle_input(Input &input)
+	{
+		if( input.keyboard().pressed(Key::Space) )
+		{
+			jump();
+		}
+
+	}
+
 	void JumpComponent::jump()
 	{
 		if( on_ground_ )
 		{
 			is_jumping_ = true;
-			velocity_ = 5.0f;
+			velocity_ = thrust_;
 		}
 	}
 } // !papaya

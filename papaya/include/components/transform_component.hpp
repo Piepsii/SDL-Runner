@@ -10,13 +10,13 @@ namespace papaya
 	class TransformComponent : public ComponentBase
 	{
 	public:
-		TransformComponent(GameObject *parent, const ComponentFamilyId id);
+		TransformComponent(GameObject *game_object, const ComponentFamilyId id);
 		 ~TransformComponent();
 
 		 void update(const Time &delta_time);
+		 void render(Renderer &renderer);
 
 		Transform transform_;
-
 
 	};
 } // !papaya

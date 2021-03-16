@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <game/state.hpp>
+#include <game/game.hpp>
 #include <math/vector2.hpp>
 
 namespace papaya {
@@ -16,9 +18,10 @@ namespace papaya {
       Transform &set_scale(const Vector2 &scale);
       Transform &set_rotation(const float rotation);
 
-      Vector2 origin_; // pivot
+      Vector2 origin_;
       Vector2 position_;
       Vector2 scale_;
       float rotation_;
+
    };
 } // !papaya
