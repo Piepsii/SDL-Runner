@@ -4,7 +4,8 @@
 
 namespace papaya {
    Transform::Transform()
-      : scale_(1.0f, 1.0f)
+      : position_(0.0f, 0.0f)
+      , scale_(1.0f, 1.0f)
       , rotation_(0.0f)
    {
    }

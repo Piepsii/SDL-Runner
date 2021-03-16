@@ -31,7 +31,7 @@ namespace papaya {
          static_assert(std::is_base_of<ComponentBase, ComponentType>::value,  
                        "ComponentType must inherit from ComponentBase");
 
-         ComponentType *component = new ComponentType(this);
+         ComponentType *component = new ComponentType(this, ComponentRegistry::family<ComponentType>());
          components_.push_back(component);
          return component;
       }

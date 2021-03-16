@@ -1,5 +1,6 @@
 // gameobject.cc
 
+#include "components/transform_component.hpp"
 #include "game/gameobject.hpp"
 #include "game/component.hpp"
 
@@ -9,6 +10,7 @@
 namespace papaya {
    GameObject::GameObject()
    {
+      add_component<TransformComponent>();
    }
 
    GameObject::~GameObject()

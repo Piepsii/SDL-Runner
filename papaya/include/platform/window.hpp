@@ -12,6 +12,9 @@ namespace papaya {
 
       void present();
 
+      static int width_;
+      static int height_;
+
    private:
       void *window_;
       void *context_;

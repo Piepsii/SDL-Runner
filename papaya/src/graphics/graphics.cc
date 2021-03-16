@@ -16,7 +16,7 @@ namespace papaya {
       Texture white;
    } // !anon
 
-   bool Graphics::init()
+   bool Graphics::init(int &width, int &height)
    {
       glEnable(GL_TEXTURE_2D);
       glEnable(GL_BLEND);
@@ -26,6 +26,9 @@ namespace papaya {
       glEnableClientState(GL_TEXTURE_COORD_ARRAY);
       glEnableClientState(GL_COLOR_ARRAY);
 
+      set_viewport(Rectangle{ 0, 0, width, height });
+      set_projection(Matrix4::orthographic(static_cast<float>(width), static_cast<float>(height)));
+      
       unsigned int data[] = { 0xffffffff }; // 0xaarrggbb
       if (!white.create(Texture::Format::Rgba8, 1, 1, data)) {
          return false;

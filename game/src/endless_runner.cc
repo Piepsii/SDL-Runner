@@ -19,9 +19,15 @@ namespace runner
 
 	bool EndlessRunner::init()
 	{
-		set_active_state(&menu_);
 
 		GameObject go{};
+
+		runtime_.textures().load("assets/welcome_message.png");
+		runtime_.textures().load("assets/parallax_1.png");
+		runtime_.textures().load("assets/parallax_2.png");
+		runtime_.textures().load("assets/octopus_1.png");
+		runtime_.textures().load("assets/octopus_2.png");
+		runtime_.textures().load("assets/coral.png");
 
 		FileStream stream = runtime_.filesystem().open("assets/test.zip");
 		if( !stream.is_valid() )
@@ -43,6 +49,12 @@ namespace runner
 			int asd = 0;
 		}
 		std::string data(atlas.data(), atlas.size());
+
+		menu_.init();
+		play_.init();
+
+		set_active_state(&menu_);
+
 		return true;
 	}
 

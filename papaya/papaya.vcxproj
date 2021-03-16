@@ -96,6 +96,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\components\jump_component.cc" />
+    <ClCompile Include="src\components\sprite_component.cc" />
+    <ClCompile Include="src\components\transform_component.cc" />
     <ClCompile Include="src\game\component.cc" />
     <ClCompile Include="src\game\game.cc" />
     <ClCompile Include="src\game\gameobject.cc" />
@@ -129,6 +132,9 @@
     <ClCompile Include="src\scene\transform.cc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\components\jump_component.hpp" />
+    <ClInclude Include="include\components\sprite_component.hpp" />
+    <ClInclude Include="include\components\transform_component.hpp" />
     <ClInclude Include="include\game\component.hpp" />
     <ClInclude Include="include\game\component_registry.hpp" />
     <ClInclude Include="include\game\game.hpp" />

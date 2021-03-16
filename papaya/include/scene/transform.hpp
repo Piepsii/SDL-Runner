@@ -5,7 +5,8 @@
 #include <math/vector2.hpp>
 
 namespace papaya {
-   class Transform {
+   class Transform
+   {
    public:
       Transform();
       Transform(const Vector2 &position);

@@ -12,6 +12,7 @@ namespace papaya {
       : window_(nullptr)
       , context_(nullptr)
    {
+
       if ((window_ = SDL_CreateWindow(title,
                                       SDL_WINDOWPOS_CENTERED,
                                       SDL_WINDOWPOS_CENTERED,
@@ -26,7 +27,13 @@ namespace papaya {
       {
          throw std::runtime_error("Could not create OpenGL render context!");
       }
+
+      width_ = width;
+      height_ = height;
    }
+
+   int Window::width_;
+   int Window::height_;
 
    Window::~Window()
    {

@@ -33,7 +33,7 @@ namespace papaya {
       , texture_(texture)
    {
       const float inv_width = 1.0f / texture->width();
-      const float inv_height = 1.0f / texture->handle();
+      const float inv_height = 1.0f / texture->height();
 
       texcoords_.x_ = (rect.x_) * inv_width;
       texcoords_.y_ = (rect.y_) * inv_height;

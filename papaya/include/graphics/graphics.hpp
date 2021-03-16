@@ -11,7 +11,7 @@ namespace papaya {
 
    class Graphics {
    public:
-      static bool init();
+      static bool init(int &width, int &height);
       static void shut();
 
       static void clear(const Color &color);

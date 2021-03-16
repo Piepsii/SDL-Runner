@@ -10,8 +10,10 @@ using namespace papaya;
 int game_run()
 {
    try { 
+      int width = 854;
+      int height = 480;
       Platform platform;
-      Window window("5sd13_2020 - Endless Runner - Paul Brandstetter", 1280, 720);
+      Window window("5sd13_2020 - Endless Runner - Paul Brandstetter", width, height);
       Debug::log("Platform and window ok!");
 
       Dispatcher dispatcher;
@@ -20,7 +22,7 @@ int game_run()
       TextureStorage textures(filesystem);
       Renderer renderer;
 
-      if (!Graphics::init()) {
+      if (!Graphics::init(width, height)) {
          throw std::runtime_error("Could not initialize Graphics!");
       }
 
@@ -36,17 +38,13 @@ int game_run()
                       textures,
                       renderer);
 
+
       runner::EndlessRunner *game = new runner::EndlessRunner(runtime);
       if( !game->init() )
       {
          Debug::log("failed to initialize game!");
          return 0;
       }
-
-      Vector2 size(10.0f, 10.0f);
-      Vector4 texcoord;
-      Sprite sprite;
-      Color color = Color::White;
 
       bool running = true;
       while (running) {
@@ -60,8 +58,8 @@ int game_run()
          {
             running = false;
          }
-         renderer.clear(color);
 
+         renderer.flush();
          window.present();
       }
 
