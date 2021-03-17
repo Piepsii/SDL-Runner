@@ -2,11 +2,11 @@
 
 #include "components\jump_component.hpp"
 
-namespace papaya
+namespace runner
 {
-	JumpComponent::JumpComponent(GameObject *game_object, const ComponentFamilyId id)
+	JumpComponent::JumpComponent(papaya::GameObject *game_object, const papaya::ComponentFamilyId id)
 		: ComponentBase(game_object, id)
-		, transform_(&game_object_->get_component<TransformComponent>()->transform_)
+		, transform_(&game_object->get_component<papaya::TransformComponent>()->transform_)
 		, is_jumping_(false)
 		, is_falling_(false)
 		, on_ground_(true)
@@ -23,7 +23,7 @@ namespace papaya
 
 	}
 
-	void JumpComponent::update(const Time &delta_time)
+	void JumpComponent::update(const papaya::Time &delta_time)
 	{
  		velocity_ = velocity_ - gravity_ * delta_time.as_seconds() * gravity_scaling_;
 		transform_->position_.y_ -= velocity_;
@@ -47,9 +47,9 @@ namespace papaya
 		}
 	}
 
-	void JumpComponent::handle_input(Input &input)
+	void JumpComponent::handle_input(papaya::Input &input)
 	{
-		if( input.keyboard().pressed(Key::Space) )
+		if( input.keyboard().pressed(papaya::Key::Space) )
 		{
 			jump();
 		}
@@ -64,4 +64,4 @@ namespace papaya
 			velocity_ = thrust_;
 		}
 	}
-} // !papaya
+} // !runner

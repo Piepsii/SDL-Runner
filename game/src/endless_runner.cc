@@ -1,4 +1,5 @@
 #include "endless_runner.hpp"
+#include "components/scrollable_component.hpp"
 
 using namespace papaya;
 
@@ -19,15 +20,16 @@ namespace runner
 
 	bool EndlessRunner::init()
 	{
-
-		GameObject go{};
-
 		runtime_.textures().load("assets/welcome_message.png");
 		runtime_.textures().load("assets/parallax_1.png");
 		runtime_.textures().load("assets/parallax_2.png");
 		runtime_.textures().load("assets/octopus_1.png");
 		runtime_.textures().load("assets/octopus_2.png");
-		runtime_.textures().load("assets/coral.png");
+		runtime_.textures().load("assets/coral_1.png");
+		runtime_.textures().load("assets/coral_2.png");
+		runtime_.textures().load("assets/transparent.png");
+
+		ScrollableComponent::transparent_texture_ = runtime_.textures().find("assets/transparent.png");
 
 		FileStream stream = runtime_.filesystem().open("assets/test.zip");
 		if( !stream.is_valid() )

@@ -20,8 +20,8 @@ namespace papaya
 		virtual void render(Renderer &renderer) = 0;
 		virtual bool init() = 0;
 
-		int count_;
-		GameObject *game_objects;
+		int count_ = 0;
+		GameObject *game_objects = nullptr;
 
 		void push(GameObject &game_object);
 		void delete_game_objects();

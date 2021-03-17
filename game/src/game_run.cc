@@ -10,8 +10,8 @@ using namespace papaya;
 int game_run()
 {
    try { 
-      int width = 854;
-      int height = 480;
+      int width = 640;
+      int height = 400;
       Platform platform;
       Window window("5sd13_2020 - Endless Runner - Paul Brandstetter", width, height);
       Debug::log("Platform and window ok!");

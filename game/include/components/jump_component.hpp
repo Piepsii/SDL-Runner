@@ -9,24 +9,24 @@
 #include "platform/debug.hpp"
 #include "platform/time.hpp"
 
-namespace papaya
+namespace runner
 {
-	class JumpComponent : public ComponentBase
+	class JumpComponent : public papaya::ComponentBase
 	{
 	public:
-		JumpComponent(GameObject *game_object, const ComponentFamilyId id);
+		JumpComponent(papaya::GameObject *game_object, const papaya::ComponentFamilyId id);
 		~JumpComponent();
 
-		void update(const Time &delta_time);
-		void handle_input(Input &input);
+		void update(const papaya::Time &delta_time);
+		void handle_input(papaya::Input &input);
 		void jump();
 
 	private:
-		Transform *transform_;
+		papaya::Transform *transform_;
 
 		bool is_jumping_, is_falling_, on_ground_;
 		float ground_height_;
 		float velocity_, gravity_, gravity_scaling_, thrust_;
 		
 	};
-} // !papaya
+} // !runner

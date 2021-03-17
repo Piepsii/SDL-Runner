@@ -2,9 +2,6 @@
 
 #pragma once
 
-#include <components/sprite_component.hpp>
-#include <components/transform_component.hpp>
-
 #include <game/game.hpp>
 #include <game/state.hpp>
 #include <game/runtime.hpp>
