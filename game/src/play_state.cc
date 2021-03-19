@@ -4,6 +4,7 @@
 #include <components/jump_component.hpp>
 #include <components/sprite_component.hpp>
 #include <components/scrollable_component.hpp>
+#include <components/text_component.hpp>
 #include <game/runtime.hpp>
 #include <graphics/texture.hpp>
 #include <graphics/texture_storage.hpp>
@@ -70,16 +71,17 @@ namespace runner
 	}
 	bool PlayState::init()
 	{
+		Vector2 position;
+
 		GameObject *character = new GameObject;
-		//GameObject* high_score = new GameObject;
 		const Texture *character_texture = runtime_.textures().find("assets/octopus_1.png");
 		character->add_component<SpriteComponent>();
 		character->get_component<SpriteComponent>()->sprite_.set_size(Vector2{ character_texture->width(), character_texture->height() });
 		character->get_component<SpriteComponent>()->sprite_.set_texcoord(Vector4{ 0.0f, 0.0f, 1.0f, 1.0f });
 		character->get_component<SpriteComponent>()->sprite_.set_texture(character_texture);
 		character->add_component<TransformComponent>();
-		Vector2 center = { Window::width_ / 3 - character_texture->width() / 2, Window::height_ / 2 - character_texture->height() / 2 };
-		character->get_component<TransformComponent>()->transform_.set_position(center);
+		position = { Window::width_ / 3 - character_texture->width() / 2, Window::height_ / 2 - character_texture->height() / 2 };
+		character->get_component<TransformComponent>()->transform_.set_position(position);
 		character->add_component<JumpComponent>();
 		push(*character);
 		
@@ -94,8 +96,8 @@ namespace runner
 			ground->get_component<SpriteComponent>()->sprite_.set_texture(ground_texture);
 			ground->add_component<TransformComponent>();
 			ground->add_component<ScrollableComponent>();
-			center = { i * ( ground_texture->width() - 2 ) , Window::height_ / 2 - ground_texture->height() / 2 + ground_texture->height() / 2 };
-			ground->get_component<TransformComponent>()->transform_.set_position(center);
+			position = { i * ( ground_texture->width() - 2 ) , Window::height_ / 2 - ground_texture->height() / 2 + ground_texture->height() / 2 };
+			ground->get_component<TransformComponent>()->transform_.set_position(position);
 			push(*ground);
 		}
 
@@ -113,10 +115,28 @@ namespace runner
 			obstacle_1->add_component<ScrollableComponent>();
 			obstacle_1->get_component<ScrollableComponent>()->add_texture(obstacle_2_texture);
 			obstacle_1->get_component<ScrollableComponent>()->chance_of_spawning = 33;
-			center = { i * obstacle_1_texture->width() * 4 , Window::height_ / 2 - obstacle_1_texture->height() / 2 };
-			obstacle_1->get_component<TransformComponent>()->transform_.set_position(center);
+			position = { i * obstacle_1_texture->width() * 4 , Window::height_ / 2 - obstacle_1_texture->height() / 2 };
+			obstacle_1->get_component<TransformComponent>()->transform_.set_position(position);
 			push(*obstacle_1);
 		}
+
+		GameObject* high_score = new GameObject;
+		TextComponent* tc = high_score->add_component<TextComponent>();
+		tc->set_texture(runtime_.textures().find("assets/0.png"), 0);
+		tc->set_texture(runtime_.textures().find("assets/1.png"), 1);
+		tc->set_texture(runtime_.textures().find("assets/2.png"), 2);
+		tc->set_texture(runtime_.textures().find("assets/3.png"), 3);
+		tc->set_texture(runtime_.textures().find("assets/4.png"), 4);
+		tc->set_texture(runtime_.textures().find("assets/5.png"), 5);
+		tc->set_texture(runtime_.textures().find("assets/6.png"), 6);
+		tc->set_texture(runtime_.textures().find("assets/7.png"), 7);
+		tc->set_texture(runtime_.textures().find("assets/8.png"), 8);
+		tc->set_texture(runtime_.textures().find("assets/9.png"), 9);
+		tc->set_number(123456);
+		position = { Window::width_ / 2 , 10 };
+		high_score->get_component<TransformComponent>()->transform_.set_position(position);
+		push(*high_score);
+
 		return true;
 	}
 } // !runner

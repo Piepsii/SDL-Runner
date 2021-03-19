@@ -28,6 +28,16 @@ namespace runner
 		runtime_.textures().load("assets/coral_1.png");
 		runtime_.textures().load("assets/coral_2.png");
 		runtime_.textures().load("assets/transparent.png");
+		runtime_.textures().load("assets/0.png");
+		runtime_.textures().load("assets/1.png");
+		runtime_.textures().load("assets/2.png");
+		runtime_.textures().load("assets/3.png");
+		runtime_.textures().load("assets/4.png");
+		runtime_.textures().load("assets/5.png");
+		runtime_.textures().load("assets/6.png");
+		runtime_.textures().load("assets/7.png");
+		runtime_.textures().load("assets/8.png");
+		runtime_.textures().load("assets/9.png");
 
 		ScrollableComponent::transparent_texture_ = runtime_.textures().find("assets/transparent.png");
 
