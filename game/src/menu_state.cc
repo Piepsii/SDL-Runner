@@ -46,7 +46,7 @@ namespace runner
 		}
 
 		// Input
-		if( game_objects != nullptr )
+		if( game_objects_ != nullptr )
 		{
 			handle_input_game_objects(runtime_.input());
 		}
@@ -63,7 +63,7 @@ namespace runner
 
 
 		// Update
-		if( game_objects != nullptr )
+		if( game_objects_ != nullptr )
 		{
 			update_game_objects(delta_time);
 		}

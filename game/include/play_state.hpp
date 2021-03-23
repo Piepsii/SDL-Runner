@@ -29,6 +29,8 @@ namespace runner
 		const papaya::Keyboard &keyboard_;
 		papaya::State *next_;
 		MenuState *menu_;
+		papaya::GameObject *high_score_;
+		unsigned int score_;
 
 	};
 } // !runner

@@ -21,7 +21,7 @@ namespace papaya
 		virtual bool init() = 0;
 
 		int count_ = 0;
-		GameObject *game_objects = nullptr;
+		GameObject *game_objects_ = nullptr;
 
 		void push(GameObject &game_object);
 		void delete_game_objects();

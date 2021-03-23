@@ -8,25 +8,25 @@ namespace papaya
 	{
 		if( count_ == 0 )
 		{
-			game_objects = &game_object;
+			game_objects_ = &game_object;
 		}
 		else
 		{
-			game_object.next_ = game_objects;
-			game_objects = &game_object;
+			game_object.next_ = game_objects_;
+			game_objects_ = &game_object;
 		}
 		count_++;
 	}
 
 	void State::delete_game_objects()
 	{
-		if( game_objects == nullptr )
+		if( game_objects_ == nullptr )
 		{
 			return;
 		}
 		else
 		{
-			GameObject *currentptr = game_objects;
+			GameObject *currentptr = game_objects_;
 			GameObject *tempptr = nullptr;
 
 			for(int it = 0; it < count_; it++)
@@ -37,13 +37,13 @@ namespace papaya
 			}
 			currentptr = nullptr;
 			tempptr = nullptr;
-			game_objects = nullptr;
+			game_objects_ = nullptr;
 		}
 	}
 
 	void State::update_game_objects(const Time &delta_time)
 	{
-		GameObject *currentptr = game_objects;
+		GameObject *currentptr = game_objects_;
 		for( int it = 0; it < count_; it++ )
 		{
 			currentptr->update(delta_time);
@@ -53,7 +53,7 @@ namespace papaya
 
 	void State::render_game_objects(Renderer &renderer)
 	{
-		GameObject *currentptr = game_objects;
+		GameObject *currentptr = game_objects_;
 		for( int it = 0; it < count_; it++ )
 		{
 			currentptr->render(renderer);
@@ -63,7 +63,7 @@ namespace papaya
 
 	void State::handle_input_game_objects(Input &input)
 	{
-		GameObject *currentptr = game_objects;
+		GameObject *currentptr = game_objects_;
 		for( int it = 0; it < count_; it++ )
 		{
 			currentptr->handle_input(input);

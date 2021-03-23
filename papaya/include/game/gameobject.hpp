@@ -23,9 +23,9 @@ namespace papaya {
       void handle_input(Input &input);
 
       template <typename ComponentType>
-      bool has_component() const
+      bool has_component()
       {
-         return get_component<ComponentType>() != nullptr;
+         return (get_component<ComponentType>() != nullptr);
       }
 
       template <typename ComponentType>
@@ -51,6 +51,8 @@ namespace papaya {
 
          return nullptr;
       }
+
+    
 
       GameObject *next_;
 
