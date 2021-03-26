@@ -1,8 +1,10 @@
+// endless_runner.hpp
+
 #pragma once
 
 #include <papaya.hpp>
-#include "menu_state.hpp"
-#include "play_state.hpp"
+#include "states/menu_state.hpp"
+#include "states/play_state.hpp"
 
 namespace runner
 {
@@ -19,7 +21,7 @@ namespace runner
 	private:
 		MenuState menu_;
 		PlayState play_;
-
+		GameOverState game_over_;
 
 	};
 } // !runner

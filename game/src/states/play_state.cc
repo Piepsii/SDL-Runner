@@ -1,6 +1,7 @@
-#include "play_state.hpp"
-#include "menu_state.hpp"
+// play_state.cc
 
+#include <states/play_state.hpp>
+#include <states/menu_state.hpp>
 #include <components/collision_component.hpp>
 #include <components/jump_component.hpp>
 #include <components/sprite_component.hpp>
@@ -19,11 +20,12 @@ using namespace papaya;
 
 namespace runner
 {
-	PlayState::PlayState(papaya::Runtime &runtime, MenuState *menu)
+	PlayState::PlayState(papaya::Runtime &runtime, MenuState *menu, GameOverState *game_over)
 		: runtime_(runtime)
 		, keyboard_(runtime.input().keyboard())
 		, next_(nullptr)
 		, menu_(menu)
+		, game_over_(game_over)
 		, high_score_(nullptr)
 		, score_(0)
 	{
@@ -47,6 +49,7 @@ namespace runner
 		{
 			once = true;
 			Debug::log("PlayState");
+			reset();
 		}
 
 		// Input
@@ -57,6 +60,7 @@ namespace runner
 		if( keyboard_.released(Key::Escape) )
 		{
 			next_ = menu_;
+			exit();
 			return false;
 		}
 
@@ -72,7 +76,9 @@ namespace runner
 			{
 				if( currentptr->get_component<CollisionComponent>()->is_colliding() )
 				{
-					next_ = menu_;
+					next_ = game_over_;
+					exit();
+					return false;
 				}
 			}
 			currentptr = currentptr->next_;
@@ -139,7 +145,7 @@ namespace runner
 				position = { i * obstacle_1_texture->width() * 4 , Window::height_ / 2 - obstacle_1_texture->height() / 2 };
 				obstacle->get_component<TransformComponent>()->transform_.set_position(position);
 				CollisionComponent *cc = obstacle->add_component<CollisionComponent>();
-				cc->set_collision_shape(Vector2(16.0f, 16.0f));
+				cc->set_collision_shape(Vector2(32.0f, 32.0f));
 				push(*obstacle);
 			}
 		}
@@ -165,5 +171,28 @@ namespace runner
 		/*--------------------------------------------------------------------------------------------------------------*/
 
 		return true;
+	}
+
+	void PlayState::exit()
+	{
+		reset();
+	}
+
+	void PlayState::reset()
+	{
+		GameObject *currentptr = game_objects_;
+		while( currentptr != nullptr )
+		{
+			int i = 0;
+			if( currentptr->has_component<ScrollableComponent>() && currentptr->has_component<CollisionComponent>() )
+			{
+				currentptr->get_component<ScrollableComponent>()->set_transparent();
+				currentptr->get_component<TransformComponent>()->transform_.set_position({ i * 32 * 4 , Window::height_ / 2 - 32 / 2 });
+				i++;
+			}
+			currentptr = currentptr->next_;
+		}
+		score_ = 0;
+		ScrollableComponent::scroll_speed_ = 1.0f;
 	}
 } // !runner

@@ -102,21 +102,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="include\menu_state.hpp" />
+    <ClCompile Include="include\states\menu_state.hpp" />
+    <ClCompile Include="src\components\collision_component.cc" />
     <ClCompile Include="src\components\jump_component.cc" />
     <ClCompile Include="src\components\scrollable_component.cc" />
     <ClCompile Include="src\components\text_component.cc" />
     <ClCompile Include="src\endless_runner.cc" />
     <ClCompile Include="src\game_run.cc" />
-    <ClCompile Include="src\menu_state.cc" />
-    <ClCompile Include="src\play_state.cc" />
+    <ClCompile Include="src\states\game_over_state.cc" />
+    <ClCompile Include="src\states\menu_state.cc" />
+    <ClCompile Include="src\states\play_state.cc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\components\collision_component.hpp" />
     <ClInclude Include="include\components\jump_component.hpp" />
     <ClInclude Include="include\components\scrollable_component.hpp" />
     <ClInclude Include="include\components\text_component.hpp" />
     <ClInclude Include="include\endless_runner.hpp" />
-    <ClInclude Include="include\play_state.hpp" />
+    <ClInclude Include="include\states\game_over_state.hpp" />
+    <ClInclude Include="include\states\play_state.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

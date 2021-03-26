@@ -87,4 +87,10 @@ namespace runner
 		texture_count_++;
 	}
 
+	void ScrollableComponent::set_transparent()
+	{
+		sprite_->set_texture(transparent_texture_);
+	}
+
+
 } // !runner

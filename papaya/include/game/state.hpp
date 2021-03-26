@@ -19,6 +19,7 @@ namespace papaya
 		virtual bool update(const Time &delta_time) = 0;
 		virtual void render(Renderer &renderer) = 0;
 		virtual bool init() = 0;
+		virtual void exit() = 0;
 
 		int count_ = 0;
 		GameObject *game_objects_ = nullptr;
@@ -31,6 +32,5 @@ namespace papaya
 
 		//virtual void shut() = 0;
 		//virtual void enter() = 0;
-		//virtual void exit() = 0;
 	};
 } // !papaya

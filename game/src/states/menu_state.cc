@@ -1,16 +1,6 @@
-#include "menu_state.hpp"
-#include "play_state.hpp"
+// menu_state.cc
 
-#include <components/sprite_component.hpp>
-#include <game/runtime.hpp>
-#include <graphics/texture.hpp>
-#include <graphics/texture_storage.hpp>
-#include <input/input.hpp>
-#include <platform/time.hpp>
-#include <platform/debug.hpp>
-#include <platform/window.hpp>
-#include <scene/renderer.hpp>
-#include <scene/sprite.hpp>
+#include "states/menu_state.hpp"
 
 using namespace papaya;
 
@@ -88,16 +78,23 @@ namespace runner
 	}
 	bool MenuState::init()
 	{
+		/*--------------------------------------------------------------------------------------------------------------*/
 		papaya::GameObject *welcome_ = new GameObject;
 		const Texture *welcome_texture = runtime_.textures().find("assets/welcome_message.png");
-		welcome_->add_component<SpriteComponent>();
-		welcome_->get_component<SpriteComponent>()->sprite_.set_size(Vector2{ welcome_texture->width(), welcome_texture->height() });
-		welcome_->get_component<SpriteComponent>()->sprite_.set_texcoord(Vector4{ 0.0f, 0.0f, 1.0f, 1.0f });
-		welcome_->get_component<SpriteComponent>()->sprite_.set_texture(welcome_texture);
+		SpriteComponent *sc = welcome_->add_component<SpriteComponent>();
+		sc->sprite_.set_size(Vector2{ welcome_texture->width(), welcome_texture->height() });
+		sc->sprite_.set_texcoord(Vector4{ 0.0f, 0.0f, 1.0f, 1.0f });
+		sc->sprite_.set_texture(welcome_texture);
 
 		Vector2 center = { Window::width_ / 2 - welcome_texture->width() / 2, Window::height_ / 2 - welcome_texture->height() / 2 };
 		welcome_->get_component<TransformComponent>()->transform_.set_position(center);
 		push(*welcome_);
+		/*--------------------------------------------------------------------------------------------------------------*/
 		return true;
+	}
+
+	void MenuState::exit()
+	{
+
 	}
 } // !runner

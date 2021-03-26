@@ -23,6 +23,7 @@ namespace runner
 
 		void update(const papaya::Time &delta_time);
 		void add_texture(const papaya::Texture *texture);
+		void set_transparent();
 
 		int chance_of_spawning;
 

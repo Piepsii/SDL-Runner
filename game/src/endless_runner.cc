@@ -8,7 +8,8 @@ namespace runner
 	EndlessRunner::EndlessRunner(papaya::Runtime &runtime)
 		: Game(runtime)
 		, menu_(runtime, &play_)
-		, play_(runtime, &menu_)
+		, play_(runtime, &menu_, &game_over_)
+		, game_over_(runtime, &play_)
 	{
 
 	}
@@ -21,6 +22,7 @@ namespace runner
 	bool EndlessRunner::init()
 	{
 		runtime_.textures().load("assets/welcome_message.png");
+		runtime_.textures().load("assets/game_over_message.png");
 		runtime_.textures().load("assets/parallax_1.png");
 		runtime_.textures().load("assets/parallax_2.png");
 		runtime_.textures().load("assets/octopus_1.png");
@@ -64,6 +66,7 @@ namespace runner
 
 		menu_.init();
 		play_.init();
+		game_over_.init();
 
 		set_active_state(&menu_);
 

@@ -96,7 +96,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\components\collision_component.cc" />
     <ClCompile Include="src\components\sprite_component.cc" />
     <ClCompile Include="src\components\transform_component.cc" />
     <ClCompile Include="src\game\component.cc" />
@@ -133,7 +132,6 @@
     <ClCompile Include="src\scene\transform.cc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\components\collision_component.hpp" />
     <ClInclude Include="include\components\sprite_component.hpp" />
     <ClInclude Include="include\components\transform_component.hpp" />
     <ClInclude Include="include\game\component.hpp" />
