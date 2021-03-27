@@ -103,6 +103,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="include\states\menu_state.hpp" />
+    <ClCompile Include="src\components\animation_component.cc" />
     <ClCompile Include="src\components\collision_component.cc" />
     <ClCompile Include="src\components\jump_component.cc" />
     <ClCompile Include="src\components\scrollable_component.cc" />
@@ -114,6 +115,7 @@
     <ClCompile Include="src\states\play_state.cc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\components\animation_component.hpp" />
     <ClInclude Include="include\components\collision_component.hpp" />
     <ClInclude Include="include\components\jump_component.hpp" />
     <ClInclude Include="include\components\scrollable_component.hpp" />

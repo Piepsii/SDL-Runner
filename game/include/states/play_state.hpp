@@ -1,3 +1,5 @@
+// play_state.hpp
+
 #pragma once
 
 #include <game/state.hpp>
@@ -36,8 +38,8 @@ namespace runner
 		papaya::State *next_;
 		MenuState *menu_;
 		GameOverState *game_over_;
-		papaya::GameObject *high_score_;
-		unsigned int score_;
+		papaya::GameObject *score_object_, *highest_score_object_;
+		unsigned int score_, highest_score_;
 
 	};
 } // !runner

@@ -1,7 +1,6 @@
 // play_state.cc
 
-#include <states/play_state.hpp>
-#include <states/menu_state.hpp>
+#include <components/animation_component.hpp>
 #include <components/collision_component.hpp>
 #include <components/jump_component.hpp>
 #include <components/sprite_component.hpp>
@@ -15,6 +14,8 @@
 #include <platform/debug.hpp>
 #include <platform/window.hpp>
 #include <scene/renderer.hpp>
+#include <states/play_state.hpp>
+#include <states/menu_state.hpp>
 
 using namespace papaya;
 
@@ -26,8 +27,10 @@ namespace runner
 		, next_(nullptr)
 		, menu_(menu)
 		, game_over_(game_over)
-		, high_score_(nullptr)
+		, score_object_(nullptr)
+		, highest_score_object_(nullptr)
 		, score_(0)
+		, highest_score_(0)
 	{
 	}
 
@@ -68,7 +71,7 @@ namespace runner
 		update_game_objects(delta_time);
 		ScrollableComponent::scroll_speed_ += 0.001f;
 		score_++;
-		high_score_->get_component<TextComponent>()->set_number(score_);
+		score_object_->get_component<TextComponent>()->set_number(score_);
 		GameObject *currentptr = game_objects_;
 		while( currentptr != nullptr )
 		{
@@ -98,16 +101,17 @@ namespace runner
 		/*--------------------------------------------------------------------------------------------------------------*/
 		{
 			GameObject *character = new GameObject;
-			const Texture *character_texture = runtime_.textures().find("assets/octopus_1.png");
+			const Texture *character_texture = runtime_.textures().find("assets/octopus.png");
 			SpriteComponent *sc = character->add_component<SpriteComponent>();
-			sc->sprite_.set_size(Vector2{ character_texture->width(), character_texture->height() });
-			sc->sprite_.set_texcoord(Vector4{ 0.0f, 0.0f, 1.0f, 1.0f });
+			sc->sprite_.set_size(Vector2{ character_texture->width() / 2, character_texture->height() });
+			sc->sprite_.set_texcoord(Vector4{ 0.0f, 0.0f, 0.5f, 1.0f });
 			sc->sprite_.set_texture(character_texture);
 			position = { Window::width_ / 3 - character_texture->width() / 2, Window::height_ / 2 - character_texture->height() / 2 };
 			character->get_component<TransformComponent>()->transform_.set_position(position);
 			character->add_component<JumpComponent>();
 			CollisionComponent* cc = character->add_component<CollisionComponent>();
 			cc->set_collision_shape(Vector2(16.0f, 16.0f));
+			AnimationComponent *ac = character->add_component<AnimationComponent>();
 			push(*character);
 		}
 		/*--------------------------------------------------------------------------------------------------------------*/
@@ -125,6 +129,23 @@ namespace runner
 				position = { i * (ground_texture->width() - 2) , Window::height_ / 2 - ground_texture->height() / 2 + ground_texture->height() / 2 };
 				ground->get_component<TransformComponent>()->transform_.set_position(position);
 				push(*ground);
+			}
+		}
+		/*--------------------------------------------------------------------------------------------------------------*/
+		{
+			const Texture *fish_texture = runtime_.textures().find("assets/fish.png");
+			int spawn_amount = 10;
+			for( int i = 0; i < spawn_amount + 1; i++ )
+			{
+				GameObject *fish = new GameObject;
+				SpriteComponent *sc = fish->add_component<SpriteComponent>();
+				sc->sprite_.set_size(Vector2{ fish_texture->width(), fish_texture->height() });
+				sc->sprite_.set_texcoord(Vector4{ 0.0f, 0.0f, 1.0f, 1.0f });
+				sc->sprite_.set_texture(fish_texture);
+				fish->add_component<ScrollableComponent>();
+				position = { i * (fish_texture->width() - 2) , std::rand() % Window::height_};
+				fish->get_component<TransformComponent>()->transform_.set_position(position);
+				push(*fish);
 			}
 		}
 		/*--------------------------------------------------------------------------------------------------------------*/
@@ -151,22 +172,49 @@ namespace runner
 		}
 		/*--------------------------------------------------------------------------------------------------------------*/
 		{
-			high_score_ = new GameObject;
-			TextComponent *tc = high_score_->add_component<TextComponent>();
-			tc->set_texture(runtime_.textures().find("assets/0.png"), 0);
-			tc->set_texture(runtime_.textures().find("assets/1.png"), 1);
-			tc->set_texture(runtime_.textures().find("assets/2.png"), 2);
-			tc->set_texture(runtime_.textures().find("assets/3.png"), 3);
-			tc->set_texture(runtime_.textures().find("assets/4.png"), 4);
-			tc->set_texture(runtime_.textures().find("assets/5.png"), 5);
-			tc->set_texture(runtime_.textures().find("assets/6.png"), 6);
-			tc->set_texture(runtime_.textures().find("assets/7.png"), 7);
-			tc->set_texture(runtime_.textures().find("assets/8.png"), 8);
-			tc->set_texture(runtime_.textures().find("assets/9.png"), 9);
+			score_object_ = new GameObject;
+			TextComponent *tc = score_object_->add_component<TextComponent>();
+			tc->set_texture_set(runtime_.textures().find("assets/digits.png"));
 			tc->set_number(000000);
-			position = { Window::width_ / 2 , 10 };
-			high_score_->get_component<TransformComponent>()->transform_.set_position(position);
-			push(*high_score_);
+			position = { 100 , 10 };
+			score_object_->get_component<TransformComponent>()->transform_.set_position(position);
+			push(*score_object_);
+		}
+		/*--------------------------------------------------------------------------------------------------------------*/
+		{
+			highest_score_object_ = new GameObject;
+			TextComponent *tc = highest_score_object_->add_component<TextComponent>();
+			tc->set_texture_set(runtime_.textures().find("assets/digits.png"));
+			tc->set_number(000000);
+			position = { Window::width_ / 2 + 100 , 10 };
+			highest_score_object_->get_component<TransformComponent>()->transform_.set_position(position);
+			push(*highest_score_object_);
+		}
+		/*--------------------------------------------------------------------------------------------------------------*/
+		{
+			papaya::GameObject *score_message = new GameObject;
+			const Texture *score_message_texture = runtime_.textures().find("assets/score_message.png");
+			SpriteComponent *sc = score_message->add_component<SpriteComponent>();
+			sc->sprite_.set_size(Vector2{ score_message_texture->width(), score_message_texture->height() });
+			sc->sprite_.set_texcoord(Vector4{ 0.0f, 0.0f, 1.0f, 1.0f });
+			sc->sprite_.set_texture(score_message_texture);
+
+			position = { 5, 10 };
+			score_message->get_component<TransformComponent>()->transform_.set_position(position);
+			push(*score_message);
+		}
+		/*--------------------------------------------------------------------------------------------------------------*/
+		{
+			papaya::GameObject *high_score_message = new GameObject;
+			const Texture *high_score_message_texture = runtime_.textures().find("assets/high_score_message.png");
+			SpriteComponent *sc = high_score_message->add_component<SpriteComponent>();
+			sc->sprite_.set_size(Vector2{ high_score_message_texture->width(), high_score_message_texture->height() });
+			sc->sprite_.set_texcoord(Vector4{ 0.0f, 0.0f, 1.0f, 1.0f });
+			sc->sprite_.set_texture(high_score_message_texture);
+
+			position = { Window::width_ / 2 - 5, 10 };
+			high_score_message->get_component<TransformComponent>()->transform_.set_position(position);
+			push(*high_score_message);
 		}
 		/*--------------------------------------------------------------------------------------------------------------*/
 
@@ -192,6 +240,8 @@ namespace runner
 			}
 			currentptr = currentptr->next_;
 		}
+		score_ > highest_score_ ? highest_score_ = score_ : highest_score_ = highest_score_;
+		highest_score_object_->get_component<TextComponent>()->set_number(highest_score_);
 		score_ = 0;
 		ScrollableComponent::scroll_speed_ = 1.0f;
 	}

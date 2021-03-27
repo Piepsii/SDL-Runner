@@ -1,3 +1,5 @@
+// endless_runner.cc
+
 #include "endless_runner.hpp"
 #include "components/scrollable_component.hpp"
 
@@ -23,23 +25,15 @@ namespace runner
 	{
 		runtime_.textures().load("assets/welcome_message.png");
 		runtime_.textures().load("assets/game_over_message.png");
+		runtime_.textures().load("assets/high_score_message.png");
+		runtime_.textures().load("assets/score_message.png");
 		runtime_.textures().load("assets/parallax_1.png");
-		runtime_.textures().load("assets/parallax_2.png");
-		runtime_.textures().load("assets/octopus_1.png");
-		runtime_.textures().load("assets/octopus_2.png");
+		runtime_.textures().load("assets/fish.png");
+		runtime_.textures().load("assets/octopus.png");
 		runtime_.textures().load("assets/coral_1.png");
 		runtime_.textures().load("assets/coral_2.png");
 		runtime_.textures().load("assets/transparent.png");
-		runtime_.textures().load("assets/0.png");
-		runtime_.textures().load("assets/1.png");
-		runtime_.textures().load("assets/2.png");
-		runtime_.textures().load("assets/3.png");
-		runtime_.textures().load("assets/4.png");
-		runtime_.textures().load("assets/5.png");
-		runtime_.textures().load("assets/6.png");
-		runtime_.textures().load("assets/7.png");
-		runtime_.textures().load("assets/8.png");
-		runtime_.textures().load("assets/9.png");
+		runtime_.textures().load("assets/digits.png");
 
 		ScrollableComponent::transparent_texture_ = runtime_.textures().find("assets/transparent.png");
 

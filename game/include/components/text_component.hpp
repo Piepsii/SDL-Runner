@@ -4,6 +4,7 @@
 
 #include "game/component.hpp"
 #include "scene/sprite.hpp"
+#include <vector>
 
 namespace runner
 {
@@ -17,7 +18,7 @@ namespace runner
 		void render(papaya::Renderer &renderer);
 
 		void set_number(int number);
-		void set_texture(const papaya::Texture *texture, int index);
+		void set_texture_set(const papaya::Texture *texture);
 		void set_digit_count(int digit_count);
 
 	private:
@@ -25,7 +26,7 @@ namespace runner
 		int digit_count_;
 		int *digits_;
 		papaya::Sprite *sprites_;
-		const papaya::Texture **textures_;
+		const papaya::Texture *texture_set_ ;
 
 		void calculate_digits();
 

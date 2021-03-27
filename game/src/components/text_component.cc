@@ -16,7 +16,7 @@ namespace runner
 		, digit_count_(6)
 		, digits_(new int[digit_count_])
 		, sprites_(new papaya::Sprite[digit_count_])
-		, textures_((const papaya::Texture**) malloc(sizeof(papaya::Texture *) * digit_count_))
+		, texture_set_()
 	{
 		calculate_digits();
 		for( int i = 0; i < digit_count_; i++ )
@@ -31,7 +31,6 @@ namespace runner
 	{
 		delete digits_;
 		delete sprites_;
-		delete textures_;
 	}
 
 	void TextComponent::update(const papaya::Time &delta_time)
@@ -43,9 +42,11 @@ namespace runner
 		papaya::Transform transform = game_object_->get_component<papaya::TransformComponent>()->transform_;
 		for( int i = 0; i < digit_count_; i++ )
 		{
-			transform.position_.x_ -= textures_[digits_[i]]->width();
+			float x = transform.position_.x_ + 32.0f * -i + 32.0f * digit_count_;
+			papaya::Transform tf = transform;
+			tf.position_.x_ = x;
 			calculate_digits();
-			renderer.draw(sprites_[i], transform);
+			renderer.draw(sprites_[i], tf);
 		}
 	}
 
@@ -53,8 +54,9 @@ namespace runner
 	{
 		for( int i = 0; i < digit_count_; i++ )
 		{
-			digits_[i] = number_ %static_cast<int>(pow(10, i + 1)) / static_cast<int>(pow(10, i));
-			sprites_[i].set_texture(textures_[digits_[i]]);
+			digits_[i] = number_ % static_cast<int>(pow(10, i + 1)) / static_cast<int>(pow(10, i));
+			sprites_[i].set_texcoord({ 0.0f + 0.1f * digits_[i], 0.0f, 0.1f + 0.1f * digits_[i], 1.0f });
+			sprites_[i].set_texture(texture_set_);
 		}
 	}
 
@@ -63,9 +65,9 @@ namespace runner
 		number_ = number;
 	}
 
-	void TextComponent::set_texture(const papaya::Texture *texture, int index)
+	void TextComponent::set_texture_set(const papaya::Texture *texture)
 	{
-		textures_[index] = texture;
+		texture_set_ = texture;
 	}
 
 	void TextComponent::set_digit_count(int digit_count)
