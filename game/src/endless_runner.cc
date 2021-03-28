@@ -29,6 +29,7 @@ namespace runner
 		runtime_.textures().load("assets/score_message.png");
 		runtime_.textures().load("assets/parallax_1.png");
 		runtime_.textures().load("assets/fish.png");
+		runtime_.textures().load("assets/shark.png");
 		runtime_.textures().load("assets/octopus.png");
 		runtime_.textures().load("assets/coral_1.png");
 		runtime_.textures().load("assets/coral_2.png");
@@ -37,26 +38,6 @@ namespace runner
 
 		ScrollableComponent::transparent_texture_ = runtime_.textures().find("assets/transparent.png");
 
-		FileStream stream = runtime_.filesystem().open("assets/test.zip");
-		if( !stream.is_valid() )
-		{
-			return false;
-		}
-
-		FileArchive archive(stream);
-		if( !archive.open() )
-		{
-			return false;
-		}
-
-		std::vector<char> atlas;
-		if( archive.extract("atlas.txt", atlas) )
-		{
-			const char *text = atlas.data();
-
-			int asd = 0;
-		}
-		std::string data(atlas.data(), atlas.size());
 
 		menu_.init();
 		play_.init();

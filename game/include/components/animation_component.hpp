@@ -19,7 +19,8 @@ namespace runner
 
 	private:
 		papaya::Sprite *sprite_;
-		int counter_, animation_speed_;
+		int counter_;
+		const int animation_speed_;
 	};
 
 } // !runner

@@ -102,9 +102,10 @@ namespace runner
 		{
 			GameObject *character = new GameObject;
 			const Texture *character_texture = runtime_.textures().find("assets/octopus.png");
+			const int number_of_sprites = 4;
 			SpriteComponent *sc = character->add_component<SpriteComponent>();
-			sc->sprite_.set_size(Vector2{ character_texture->width() / 2, character_texture->height() });
-			sc->sprite_.set_texcoord(Vector4{ 0.0f, 0.0f, 0.5f, 1.0f });
+			sc->sprite_.set_size(Vector2{ character_texture->width() / number_of_sprites, character_texture->height() });
+			sc->sprite_.set_texcoord(Vector4{ 0.0f, 0.0f, 0.25f, 1.0f });
 			sc->sprite_.set_texture(character_texture);
 			position = { Window::width_ / 3 - character_texture->width() / 2, Window::height_ / 2 - character_texture->height() / 2 };
 			character->get_component<TransformComponent>()->transform_.set_position(position);
@@ -116,26 +117,9 @@ namespace runner
 		}
 		/*--------------------------------------------------------------------------------------------------------------*/
 		{
-			const Texture *ground_texture = runtime_.textures().find("assets/parallax_1.png");
-			int spawn_amount = Window::width_ / ground_texture->width();
-			for( int i = 0; i < spawn_amount + 1; i++ )
-			{
-				GameObject *ground = new GameObject;
-				SpriteComponent *sc = ground->add_component<SpriteComponent>();
-				sc->sprite_.set_size(Vector2{ ground_texture->width(), ground_texture->height() });
-				sc->sprite_.set_texcoord(Vector4{ 0.0f, 0.0f, 1.0f, 1.0f });
-				sc->sprite_.set_texture(ground_texture);
-				ground->add_component<ScrollableComponent>();
-				position = { i * (ground_texture->width() - 2) , Window::height_ / 2 - ground_texture->height() / 2 + ground_texture->height() / 2 };
-				ground->get_component<TransformComponent>()->transform_.set_position(position);
-				push(*ground);
-			}
-		}
-		/*--------------------------------------------------------------------------------------------------------------*/
-		{
 			const Texture *fish_texture = runtime_.textures().find("assets/fish.png");
 			int spawn_amount = 10;
-			for( int i = 0; i < spawn_amount + 1; i++ )
+			for( int i = 0; i < spawn_amount + 1; ++i )
 			{
 				GameObject *fish = new GameObject;
 				SpriteComponent *sc = fish->add_component<SpriteComponent>();
@@ -143,9 +127,49 @@ namespace runner
 				sc->sprite_.set_texcoord(Vector4{ 0.0f, 0.0f, 1.0f, 1.0f });
 				sc->sprite_.set_texture(fish_texture);
 				fish->add_component<ScrollableComponent>();
-				position = { i * (fish_texture->width() - 2) , std::rand() % Window::height_};
-				fish->get_component<TransformComponent>()->transform_.set_position(position);
+				fish->get_component<ScrollableComponent>()->chance_of_spawning = 80;
+				fish->get_component<ScrollableComponent>()->set_speed_variance(-0.2f);
+				int x = std::rand() % Window::width_;
+				int y = std::rand() % (Window::height_ / 2) - 32;
+				fish->get_component<TransformComponent>()->transform_.set_position({ x, y});
 				push(*fish);
+			}
+		}
+		/*--------------------------------------------------------------------------------------------------------------*/
+		{
+			const Texture *shark_texture = runtime_.textures().find("assets/shark.png");
+			int spawn_amount = 3;
+			for( int i = 0; i < spawn_amount + 1; ++i )
+			{
+				GameObject *shark = new GameObject;
+				SpriteComponent *sc = shark->add_component<SpriteComponent>();
+				sc->sprite_.set_size(Vector2{ shark_texture->width(), shark_texture->height() });
+				sc->sprite_.set_texcoord(Vector4{ 0.0f, 0.0f, 1.0f, 1.0f });
+				sc->sprite_.set_texture(shark_texture);
+				shark->add_component<ScrollableComponent>();
+				shark->get_component<ScrollableComponent>()->chance_of_spawning = 50;
+				shark->get_component<ScrollableComponent>()->set_speed_variance(-0.4f);
+				int x = std::rand() % Window::width_;
+				int y = std::rand() % (Window::height_ / 2) - 32;
+				shark->get_component<TransformComponent>()->transform_.set_position({ x, y });
+				push(*shark);
+			}
+		}
+		/*--------------------------------------------------------------------------------------------------------------*/
+		{
+			const Texture *ground_texture = runtime_.textures().find("assets/parallax_1.png");
+			int spawn_amount = Window::width_ / ground_texture->width() + 1;
+			for( int i = 0; i < spawn_amount + 1; ++i )
+			{
+				GameObject *ground = new GameObject;
+				SpriteComponent *sc = ground->add_component<SpriteComponent>();
+				sc->sprite_.set_size(Vector2{ ground_texture->width(), ground_texture->height() });
+				sc->sprite_.set_texcoord(Vector4{ 0.0f, 0.0f, 1.0f, 1.0f });
+				sc->sprite_.set_texture(ground_texture);
+				ground->add_component<ScrollableComponent>();
+				position = { i * ground_texture->width() , Window::height_ / 2 };
+				ground->get_component<TransformComponent>()->transform_.set_position(position);
+				push(*ground);
 			}
 		}
 		/*--------------------------------------------------------------------------------------------------------------*/
@@ -163,6 +187,7 @@ namespace runner
 				ScrollableComponent *scc = obstacle->add_component<ScrollableComponent>();
 				scc->add_texture(obstacle_2_texture);
 				scc->chance_of_spawning = 33;
+				scc->set_is_changing_texture(true);
 				position = { i * obstacle_1_texture->width() * 4 , Window::height_ / 2 - obstacle_1_texture->height() / 2 };
 				obstacle->get_component<TransformComponent>()->transform_.set_position(position);
 				CollisionComponent *cc = obstacle->add_component<CollisionComponent>();
@@ -229,14 +254,14 @@ namespace runner
 	void PlayState::reset()
 	{
 		GameObject *currentptr = game_objects_;
+		int i = 0;
 		while( currentptr != nullptr )
 		{
-			int i = 0;
 			if( currentptr->has_component<ScrollableComponent>() && currentptr->has_component<CollisionComponent>() )
 			{
 				currentptr->get_component<ScrollableComponent>()->set_transparent();
 				currentptr->get_component<TransformComponent>()->transform_.set_position({ i * 32 * 4 , Window::height_ / 2 - 32 / 2 });
-				i++;
+				++i;
 			}
 			currentptr = currentptr->next_;
 		}

@@ -26,18 +26,25 @@ namespace runner
 		}
 
 
-		if( counter_ > animation_speed_ )
+		if( counter_ < animation_speed_ / 4 )
 		{
-			sprite_->set_texcoord({ 0.0f, 0.0f, 0.5f, 1.0f });
+			sprite_->set_texcoord({ 0.0f, 0.0f, 0.25f, 1.0f });
 		}
-		else
+		else if(counter_ < (animation_speed_ / 2))
 		{
-			sprite_->set_texcoord({ 0.5f, 0.0f, 1.0f, 1.0f });
+			sprite_->set_texcoord({ 0.25f, 0.0f, 0.5f, 1.0f });
 		}
-
+		else if( counter_ < (animation_speed_ / 4) * 3 )
+		{
+			sprite_->set_texcoord({ 0.5f, 0.0f, 0.75f, 1.0f });
+		}
+		else if( counter_ < animation_speed_ )
+		{
+			sprite_->set_texcoord({ 0.75f, 0.0f, 1.0f, 1.0f });
+		}
 		counter_++;
 
-		if( counter_ > 60 )
+		if( counter_ > animation_speed_ )
 		{
 			counter_ = 0;
 		}

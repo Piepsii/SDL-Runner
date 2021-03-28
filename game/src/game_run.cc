@@ -4,6 +4,7 @@
 #include "endless_runner.hpp"
 
 #include <stdexcept>
+#include <ctime>
 
 using namespace papaya;
 
@@ -45,6 +46,8 @@ int game_run()
          Debug::log("failed to initialize game!");
          return 0;
       }
+
+      std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
       bool running = true;
       while (running) {

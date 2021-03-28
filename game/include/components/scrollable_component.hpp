@@ -24,6 +24,8 @@ namespace runner
 		void update(const papaya::Time &delta_time);
 		void add_texture(const papaya::Texture *texture);
 		void set_transparent();
+		void set_speed_variance(float value);
+		void set_is_changing_texture(bool value);
 
 		int chance_of_spawning;
 
@@ -38,7 +40,9 @@ namespace runner
 			TextureNode *next_;
 		} *textures_;
 		int texture_count_;
+		float speed_variance_;
 
 		bool is_scrolling_;
+		bool is_changing_texture_;
 	};
 } // !runner
